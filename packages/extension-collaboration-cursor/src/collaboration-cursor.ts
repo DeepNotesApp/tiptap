@@ -52,19 +52,24 @@ export const CollaborationCursor = Extension.create<
     return {
       provider: null,
       render: user => {
-        const cursor = document.createElement('span')
+        const base = document.createElement('span')
+
+        base.classList.add('collaboration-cursor__base')
+
+        const cursor = document.createElement('div')
 
         cursor.classList.add('collaboration-cursor__caret')
-        cursor.setAttribute('style', `border-color: ${user.color}`)
+        cursor.setAttribute('style', `background-color: ${user.color}`)
+        base.insertBefore(cursor, null)
 
         const label = document.createElement('div')
 
         label.classList.add('collaboration-cursor__label')
         label.setAttribute('style', `background-color: ${user.color}`)
         label.insertBefore(document.createTextNode(user.name), null)
-        cursor.insertBefore(label, null)
+        base.insertBefore(label, null)
 
-        return cursor
+        return base
       },
       onUpdate: defaultOnUpdate,
     }
